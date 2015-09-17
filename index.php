@@ -87,7 +87,7 @@
     (function(){
      $(".progress-bar").animate({width: $(".progress").width() *.75});
       
-      var SomeName = function (){
+       SomeName = function (){
        $(".progress-bar").animate({width:Myobject.intendeWidth},2000);
        
        }
@@ -100,7 +100,7 @@
        SomeName();
      //  setTimeout(SomeName,1000);
     })()
- 
+    SomeName();
        
     </script>
   </body>
