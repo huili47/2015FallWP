@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   </head>
   <body>
     <div class="container">
@@ -17,6 +18,12 @@
         </div>
         <form class="form-horizontal">
           <div class="form-group">
+            <div class ='alert alert-success' style ="display: none">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         button>
+              <h3> </h3>
+              </div>
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
               <input type="email" class="form-control" id="txtEmail" placeholder="Email">
@@ -62,6 +69,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="    //cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <script type="text/javascript">
       (function($){
           $(function(){
@@ -85,16 +94,27 @@
                // if nothin is in txtamount box
                 if( !$("#txtAmount").val()) {
                   var $inputs = $("input").css({backgroundColor: "#FFAAAA"})
-                  $(self).prop("disabled", false).html("Try Again");
+                  $(self).prop("disabled", false).html("Try Again);
+                  $(".alert").removeClass("alert-danger").addClass("alert-success").down();
+                 $("myAlert").addClass("alert-success").show().find("h3").find("you must enter an amount");
+                 toastr.error("you must enter an amount");
+                 console.log(self);
                 }else{
+                  
                   //Display success
-                  $("form").prepend("<div class ='alert alert-success'>Yay you did it</div> ")
+                  $("myAlert").removeClass("alert-danger").addClass("alert-success").show().find("h3").html("yay!you did it").show();
+                  $("form").prepend(" ")
                 }
                }
-               
-            }, 200)
+               console.error("this line should never be reached")
+;            }, 200)
             
               return false;
+              
+              
+            })
+            $('.close').on('click',function(e){
+              $(this).closet('.alert').slideup(3000);
             })
           });
     })(jQuery); 
