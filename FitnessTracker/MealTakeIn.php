@@ -36,8 +36,8 @@ session_start();
   </head>
   <body>
     <div class="container">
-          <a href="excerciseLog.php" title="View" class="btn btn-default btn-s"><i class="glyphicon glyphicon-arrow-right"></i></a>
-            <h1>Food Intake</h1>
+          <a href="excerciseLog.php" title="View" class="btn btn-default btn-s"><i class="glyphicon glyphicon-arrow-right"></i> Go to Excercise Log</a>
+            <h1>Food Log</h1>
             <h2><?=$message?></h2>
             <div class="panel panel-success">
                 <div class="panel-heading">Your Data</div>
@@ -96,7 +96,7 @@ session_start();
         </div>
         <div class="col-md-4 col-xs-10">
             <div class="alert alert-success" role="alert">
-                You did well
+                You did well!
             </div>
             <div class="alert alert-danger" role="alert">
                 Oh no! You messed up.

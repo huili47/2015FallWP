@@ -3,21 +3,21 @@ session_start();
     $name = 'Hui Li';
     $message = "Welcome $name";
     
-    $person = array( 'Name' => $name, 'Age' => 22, CallorieGoal => 4000 );
+    $person1 = array( 'Name' => $name, 'Age' => 22, CallorieGoal => 4000 );
     
-    $exercise = $_SESSION['exercise'];
-    if(!$exercise){
-      $_SESSION['exercise'] = $exercise = array(
-          array( 'Name' => 'Running', 'Time' => strtotime("-1 hour"), Callories => 400 ),
+    $exercises = $_SESSION['exercise'];
+    if(!$exercises){
+      $_SESSION['exercise'] = $exercises = array(
+          array( 'Name' => 'Running', 'Time' => strtotime("-1 hour"), Callories => 600 ),
           array( 'Name' => 'Swimming', 'Time' => strtotime("now"), Callories => 800 ),
           array( 'Name' => 'Warm up', 'Time' => strtotime("now + 1 hour"), Callories => 400 ),
-          array( 'Name' => 'PushUp', 'Time' => strtotime("6pm"), Callories => 400 ),
+          array( 'Name' => 'PushUp', 'Time' => strtotime("6pm"), Callories => 500 ),
           );
     }
         
     $total = 0;
-    foreach ($exercise as $type) {
-        $total += $type['Callories'];
+    foreach ($exercises as $types) {
+        $total += $types['Callories'];
     }
     
     
@@ -36,7 +36,7 @@ session_start();
   </head>
   <body>
     <div class="container">
-            <a href="MealTakeIn.php" title="View" class="btn btn-default btn-s"><i class="glyphicon glyphicon-arrow-left"></i></a>
+            <a href="MealTakeIn.php" title="View" class="btn btn-default btn-s"><i class="glyphicon glyphicon-arrow-right"></i> Go to Food Log</a>
             <h1>exercise Log</h1>
             <h2><?=$message?></h2>
             <div class="panel panel-success">
@@ -44,11 +44,11 @@ session_start();
                 <div class="panel-body">
                     <dl class="dl-horizontal">
                         <dt>Name</dt>
-                        <dd><?=$person['Name']?></dd>
+                        <dd><?=$person1['Name']?></dd>
                         <dt>Age</dt>
-                        <dd><?=$person['Age']?></dd>
+                        <dd><?=$person1['Age']?></dd>
                         <dt>Goal To Lose Calories</dt>
-                        <dd><?=$person['CallorieGoal']?></dd>
+                        <dd><?=$person1['CallorieGoal']?></dd>
                         <dt>Today's Excersise</dt>
                         <dd><?=$total?></dd>
                     </dl>
@@ -63,7 +63,7 @@ session_start();
             <a href="#" class="btn btn-danger">
                 <i class="glyphicon glyphicon-trash"></i>
                 Delete All
-                <span class="badge"><?=count($exercise)?></span>
+                <span class="badge"><?=count($exercises)?></span>
             </a>
             <br />
             <table class="table table-condensed table-striped table-bordered table-hover">
@@ -76,7 +76,7 @@ session_start();
                 </tr>
               </thead>
               <tbody>
-                <?php foreach($exercise as $i => $type): ?>
+                <?php foreach($exercises as $i => $types): ?>
                 <tr>
                   <th scope="row">
                     <div class="btn-group" role="group" aria-label="...">
@@ -85,9 +85,9 @@ session_start();
                       <a href="deleteExcercise.php?id=<?=$i?>" title="Delete" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                   </th>
-                  <td><?=$type['Name']?></td>
-                  <td><?=date("M d Y  h:i:sa", $type['Time'])?></td>
-                  <td><?=$type['Callories']?></td>
+                  <td><?=$types['Name']?></td>
+                  <td><?=date("M d Y  h:i:sa", $types['Time'])?></td>
+                  <td><?=$types['Callories']?></td>
                 </tr>
                 <?php endforeach; ?>
               </tbody>

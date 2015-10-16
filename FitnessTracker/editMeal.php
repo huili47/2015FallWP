@@ -44,7 +44,7 @@ session_start();
             <button type="button" class="close" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <b>Special Offer</b> Free ice cream today!
+            <b>Advice</b> You did it well!
           </div> 
         <form class="form-horizontal" action="" method="post" >
           <div class='alert' style="display: none" id="myAlert">

@@ -1,22 +1,22 @@
 <?php
-session_start();
+  session_start();
 
-  $excercise = $_SESSION['excercise'];
+  $excercises = $_SESSION['excercises'];
   if($_POST){
     if(isset($_GET['id'])){
-      $excercise[$_GET['id']] = $_POST;
+      $excercises[$_GET['id']] = $_POST;
     }else{
-      $excercise[] = $_POST;
+      $excercises[] = $_POST;
     }
     
-    $_SESSION['excercise'] = $excercise;
+    $_SESSION['excercises'] = $excercise;
     header('Location: ./excerciseLog.php');
   }
     
   if(isset($_GET['id'])){
-    $excercise = $excercise[$_GET['id']];
+    $excer = $excercises[$_GET['id']];
   }else{
-    $excercise = array();
+    $excer= array();
   }
 ?>
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ session_start();
   </head>
   <body>
     <div class="container">
-
+        
         <div class="page-header">
           <h1>excercise Log <small>Record your daily excercise</small></h1>
         </div>
@@ -55,19 +55,19 @@ session_start();
           <div class="form-group">
             <label for="txtName" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="txtName" name="Name" placeholder="excercise's Name" value="<?=$excercise['Name']?>">
+              <input type="text" class="form-control" id="txtName" name="Name" placeholder="excercise's Name" value="<?=$excer['Name']?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="txtCallories">Callories</label>
             <div class="col-sm-10">
-                  <input type="number" class="form-control" id="txtCallories" name="Callories" placeholder="Callories in this excecise"  value="<?=$excercise['Callories']?>">
+                  <input type="number" class="form-control" id="txtCallories" name="Callories" placeholder="Callories in this excecise"  value="<?=$excer['Callories']?>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="txtDate">When did you eat</label>
             <div class="col-sm-10">
-                  <input type="text" class="form-control date" id="txtDate" name="Time" placeholder="Date"  value="<?=$excercise['Time']?>">
+                  <input type="text" class="form-control date" id="txtDate" name="Time" placeholder="Date"  value="<?=$excer['Time']?>">
             </div>
           </div>
           <div class="form-group">
