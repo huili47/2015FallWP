@@ -1,3 +1,6 @@
+http://www.myfitnesspal.com/
+http://www.prohealth.com/weightloss/tools/exercise/calculator1_2.cfm
+
 # 2015FallWP Fitness Tracker
 
   A Fintness Tracker is a web app that keep tracks users' personal data such as calories through the use of table as well as the graph. Consider to use highchart  to visualize the 
