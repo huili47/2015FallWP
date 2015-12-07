@@ -30,8 +30,8 @@ module.exports =  {
 						  + " WHERE id = ? ";
 			  }else{
 				  sql = "INSERT INTO 2015Fall_Persons "
-						  + " (Name, Birthday, created_at) "
-						  + "VALUES (?, ?, Now() ) ";				
+						  + " (Name, Birthday, created_at, TypeId) "
+						  + "VALUES (?, ?, Now(), 6 ) ";				
 			  }
 
         conn.query(sql, [row.Name, row.Birthday, row.id],function(err,data){
@@ -54,8 +54,8 @@ module.exports =  {
 function GetConnection(){
         var conn = mysql.createConnection({
           host: "localhost",
-          user: "huili47",
-          password: "",
+          user: "blabla",
+          password: "1212",
           database: "c9"
         });
     return conn;
