@@ -1,5 +1,4 @@
-http://www.myfitnesspal.com/
-http://www.prohealth.com/weightloss/tools/exercise/calculator1_2.cfm
+
 
 # 2015FallWP Fitness Tracker
 
