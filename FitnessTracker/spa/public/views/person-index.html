@@ -12,21 +12,17 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Time</th>
-                    <th>Duration</th>
-                    <th>Intensity</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>Weight</th>
                 </tr>
             </thead>
             <tbody>
                     <tr ng-repeat="row in vm.rows">
                         <td ng-if-start="!row.isEditing">{{row.Name}}</td>
-                        <td >{{row.PersonName}}</td>
+                        <td >{{row.Birthday}}</td>
                         <td >{{row.TypeName}}</td>
-                        <td >{{row.Time}}</td>
-                        <td >{{row.Duration}}</td>
-                        <td >{{row.Intensity}}</td>
+                        <td >{{row.Weight}}</td>
                           <th ng-if-end scope="row">
                             <div class="btn-group" role="group" aria-label="...">
                               <a href="" title="View" class="btn btn-default btn-xs ajax"><i class="glyphicon glyphicon-eye-open"></i></a>
@@ -36,15 +32,12 @@
                           </th>
                         
                         <td ng-if-start="row.isEditing"><input type="text" name="Name" class="form-control" placeholder="Name" ng-model="row.Name" /></td>
-                        <td>
-                            <select ng-options="option.id as option.Name for option in vm.persons" ng-model="row.UserId" class="form-control"></select>
-                         </td>
+                        <td><input type="text" name="Age" class="form-control" placeholder="Age" ng-model="row.Age" /></td>
                         <td>
                             <select ng-options="option.id as option.Name for option in vm.keywords" ng-model="row.TypeId" class="form-control"></select>
                          </td>
-                        <td><input type="text" name="Time" class="form-control date-time" placeholder="Time" ng-model="row.Time" /></td>
-                        <td><input type="text" name="Duration" class="form-control" placeholder="Duration" ng-model="row.Duration" /></td>
-                        <td><input type="text" name="Intensity" class="form-control" placeholder="Intensity" ng-model="row.Intensity" /></td>
+                         <td><input type="text" name="height" class="form-control" placeholder="height" ng-model="row.height" /></td>
+                        <td><input type="text" name="Weight" class="form-control" placeholder="Weight" ng-model="row.Weight" /></td>
                         <td ng-if-end>
                             <input type="button" value="Save" class="btn btn-primary btn-sm submit" ng-click="vm.save(row, $index)"/>
                             <input type="button" value="Cancel" class="btn btn-default btn-sm submit" ng-click="row.isEditing = false"/>

@@ -2,19 +2,11 @@ var mysql = require("mysql");
 
 module.exports =  {
     blank: function(){ return {} },
-    get: function(id, ret, searchType){
+    get: function(id, persons_id, ret){                 
         var conn = GetConnection();
-        var sql = 'SELECT P.* FROM Persons P';
+        var sql = 'SELECT * FROM Meals WHERE persons_id=' + persons_id;
         if(id){
-          switch (searchType) {
-            case 'facebook':
-              sql += " WHERE P.fbid = " + id;
-              break;
-            
-            default:
-              sql += " WHERE P.persons_id = " + id;
-          }
-          
+          sql += " AND foods_id = " + id;
         }
         conn.query(sql, function(err,rows){
           ret(err,rows);
@@ -23,30 +15,31 @@ module.exports =  {
     },
     delete: function(id, ret){
         var conn = GetConnection();
-        conn.query("DELETE FROM Persons WHERE persons_id = " + id, function(err,rows){
+        conn.query("DELETE FROM Meals WHERE meals_id = " + id, function(err,rows){
           ret(err);
           conn.end();
         });        
     },
-    save: function(row, ret){
+    save: function(row, persons_id, ret){   
         var sql;
         var conn = GetConnection();
         //  TODO Sanitize
         if (row.id) 
         {
-				  sql = " Update Persons P "                
-							+ " Set firstname=?, lastname=? "
-						  + " WHERE P.persons_id=? ";
-			  }else
+				  sql = " Update Meals M"
+							+ " Set 'mealname'=?, 'calories'=?, 'persons_id'=" + persons_id
+						  + " WHERE M.meals_id=? ";
+			  }
+			  else
 			  {
-				  sql = "INSERT INTO Persons "                     
-						  + " (firstname, lastname, created_at, fbid, typeid)"  
-						  + "VALUES (?, ?, now(), ?, 'User')";			 
+				  sql = "INSERT INTO Meals " //error in my sql
+				      + " (mealname, calories, created_at, persons_id) "
+						  + "VALUES (?, ?, now(), " + persons_id + ")";	
 			  }
 
-        conn.query(sql, [row.firstname, row.lastname, row.fbid, row.typeid, row.id],function(err,data){
+        conn.query(sql, [row.foodname, row.calories, row.persons_id, row.id],function(err,data){
           if(!err && !row.id){
-            row.id = data.insertId;
+            row.id = data.insertId; 
           }
           ret(err, row);
           conn.end();
@@ -60,7 +53,6 @@ module.exports =  {
       return errors.length ? errors : false;
     }
 };  
-
     function GetConnection(){
             var conn = mysql.createConnection({
               host: "localhost",

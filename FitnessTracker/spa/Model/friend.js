@@ -1,20 +1,13 @@
+
 var mysql = require("mysql");
 
 module.exports =  {
     blank: function(){ return {} },
-    get: function(id, ret, searchType){
+    get: function(id, persons_id, ret){
         var conn = GetConnection();
-        var sql = 'SELECT P.* FROM Persons P';
+        var sql = 'SELECT * FROM Exercise WHERE persons_id=' + persons_id;
         if(id){
-          switch (searchType) {
-            case 'facebook':
-              sql += " WHERE P.fbid = " + id;
-              break;
-            
-            default:
-              sql += " WHERE P.persons_id = " + id;
-          }
-          
+          sql += " AND exercise_id = " + id;
         }
         conn.query(sql, function(err,rows){
           ret(err,rows);
@@ -23,28 +16,26 @@ module.exports =  {
     },
     delete: function(id, ret){
         var conn = GetConnection();
-        conn.query("DELETE FROM Persons WHERE persons_id = " + id, function(err,rows){
+        conn.query("DELETE FROM Exercise WHERE exercise_id = " + id, function(err,rows){
           ret(err);
           conn.end();
         });        
     },
-    save: function(row, ret){
+    save: function(row, persons_id, ret){
         var sql;
         var conn = GetConnection();
         //  TODO Sanitize
-        if (row.id) 
-        {
-				  sql = " Update Persons P "                
-							+ " Set firstname=?, lastname=? "
-						  + " WHERE P.persons_id=? ";
-			  }else
-			  {
-				  sql = "INSERT INTO Persons "                     
-						  + " (firstname, lastname, created_at, fbid, typeid)"  
-						  + "VALUES (?, ?, now(), ?, 'User')";			 
+        if (row.id) {
+				  sql = " Update Exercise E"
+							+ " Set minutes=?, persons_id=?"
+						  + " WHERE E.exercise_id = ? ";
+			  }else{
+				  sql = "INSERT INTO Exercise "
+						  + " (minutes, created_at, persons_id) "
+						  + "VALUES (?, Now()," +	persons_id + ")";		
 			  }
 
-        conn.query(sql, [row.firstname, row.lastname, row.fbid, row.typeid, row.id],function(err,data){
+        conn.query(sql, [row.minutes, row.persons_id, row.id],function(err,data){
           if(!err && !row.id){
             row.id = data.insertId;
           }

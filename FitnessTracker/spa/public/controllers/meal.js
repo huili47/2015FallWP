@@ -1,12 +1,13 @@
         angular.module('app')
-        .controller('food', function($http, alert, panel){
+        .controller('meal', function($http, alert, panel){
             var self = this;
             
-            $http.get("/food")
+            self.template = "views/meal-index.html";   
+            $http.get("/meal")
             .success(function(data){
                 self.rows = data;
             });
-            $http.get("/person")
+            $http.get("/meal")
             .success(function(data){
                 self.persons = data;
             });
@@ -18,7 +19,7 @@
                 row.isEditing = true;
             }
             self.save = function(row, index){
-                $http.post('/food/', row)
+                $http.post('/meal/', row)
                 .success(function(data){
                     data.isEditing = false;
                     self.rows[index] = data;
@@ -28,10 +29,10 @@
             }
             self.delete = function(row, index){
                 panel.show( {
-                    title: "Delete a food",
+                    title: "Delete a meal,
                     body: "Are you sure you want to delete " + row.Name + "?",
                     confirm: function(){
-                        $http.delete('/food/' + row.id)
+                        $http.delete('/meal/' + row.id)
                         .success(function(data){
                             self.rows.splice(index, 1);
                         }).error(function(data){
@@ -42,7 +43,7 @@
             }
             
         })
-        .controller('foodNew', function($http, alert, panel){
+        .controller('mealNew', function($http, alert, panel){
             var self = this;
             
             self.row = {};
@@ -50,7 +51,7 @@
             self.choices = [];
             
             self.search = function(){
-                $http.get("/food/search/" + self.term)
+                $http.get("/meal/search/" + self.term)
                 .success(function(data){
                     self.choices = data.hits;
                 });

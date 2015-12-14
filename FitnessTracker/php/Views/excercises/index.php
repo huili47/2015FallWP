@@ -24,10 +24,9 @@
     <thead>
         <tr>
             <th>Actions</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Height</th>
-            <th>Weight</th>
+            <th>Exercise</th>
+            <th>Calories</th>
+            <th>Minutes</th>
         </tr>
     </thead>
     <tbody>
@@ -40,10 +39,9 @@
                       <a href="?action=delete&id=<?=$row['id']?>" title="Delete" class="btn btn-default btn-xs ajax"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                   </th>
-                <td><?=$row['Name']?></td>
-                <td><?=$row['Age']?></td>
-                <td><?=$row['Height']?></td>
-                <td><?=$row['Weight']?></td>
+                <td><?=$row['Exercise']?></td>
+                <td><?=$row['Calories']?></td>
+                <td><?=$row['Minutes']?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

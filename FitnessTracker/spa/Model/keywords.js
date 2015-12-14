@@ -4,7 +4,7 @@ module.exports =  {
     blank: function(){ return {} },
     get: function(id, ret){
         var conn = g.GetConnection();
-        var sql = 'SELECT K.* FROM 2015Fall_Keywords K ';
+        var sql = 'SELECT K.* FROM Keywords K ';
         if(id){
           sql += " WHERE K.id = " + id;
         }

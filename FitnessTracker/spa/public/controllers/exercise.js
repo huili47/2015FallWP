@@ -1,20 +1,13 @@
         angular.module('app')
-        .controller('exercise', function($http, alert, panel){
+        .controller('meal', function($http, alert, panel){       
             var self = this;
-            
-            $http.get("/exercise")
+
+            self.template = "views/meal-index.html";            
+            $http.get("/meal")
             .success(function(data){
                 self.rows = data;
             });
-            $http.get("/keywords")
-            .success(function(data){
-                self.keywords = data;
-            });
-            $http.get("/person")
-            .success(function(data){
-                self.persons = data;
-            });
-            
+
             self.create = function(){
                 self.rows.push({ isEditing: true });
             }
@@ -22,7 +15,7 @@
                 row.isEditing = true;
             }
             self.save = function(row, index){
-                $http.post('/exercise/', row)
+                $http.post('/meal', row)
                 .success(function(data){
                     data.isEditing = false;
                     self.rows[index] = data;
@@ -32,10 +25,10 @@
             }
             self.delete = function(row, index){
                 panel.show( {
-                    title: "Delete a exercise",
-                    body: "Are you sure you want to delete " + row.Name + "?",
+                    title: "Delete a meal",
+                    body: "Are you sure you want to delete " + row.mealname + "?",
                     confirm: function(){
-                        $http.delete('/exercise/' + row.id)
+                        $http.delete('/food/' + row.meals_id)
                         .success(function(data){
                             self.rows.splice(index, 1);
                         }).error(function(data){
@@ -45,4 +38,4 @@
                 });
             }
             
-        });
+        })

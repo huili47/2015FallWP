@@ -1,15 +1,12 @@
-var g = require("../inc/global");
-var userId = 4;
+var mysql = require("mysql");
 
 module.exports =  {
     blank: function(){ return {} },
-    get: function(id, ret){
-        var conn = g.GetConnection();
-        var sql = 'SELECT E.*, K.Name as TypeName, P.Name as PersonName FROM 2015Fall_Exercise_Done E '
-                + '   Join 2015Fall_Persons P ON E.UserId = P.id '
-                + '   Join 2015Fall_Keywords K ON E.TypeId = K.id ';
+    get: function(id, persons_id, ret){
+        var conn = GetConnection();
+        var sql = 'SELECT * FROM Exercise WHERE persons_id=' + persons_id;
         if(id){
-          sql += " WHERE E.id = " + id;
+          sql += " AND exercise_id = " + id;
         }
         conn.query(sql, function(err,rows){
           ret(err,rows);
@@ -17,26 +14,27 @@ module.exports =  {
         });        
     },
     delete: function(id, ret){
-        var conn = g.GetConnection();
-        conn.query("DELETE FROM 2015Fall_Exercise_Done WHERE id = " + id, function(err,rows){
+        var conn = GetConnection();
+        conn.query("DELETE FROM Exercise WHERE exercise_id = " + id, function(err,rows){
           ret(err);
           conn.end();
         });        
     },
-    save: function(row, ret){
+    save: function(row, persons_id, ret){
         var sql;
-        var conn = g.GetConnection();
+        var conn = GetConnection();
         //  TODO Sanitize
         if (row.id) {
-				  sql = " Update 2015Fall_Exercise_Done "
-							+ " Set `TypeId`=?, `UserId`=?, `Name`=?, `Time`=?, `Duration`=?, `Intensity`=? "
-						  + " WHERE id = ? ";
+				  sql = " Update Exercise E"
+							+ " Set name=?, calories_burned=? persons_id=" + persons_id
+						  + " WHERE E.exercise_id = ? ";
 			  }else{
-				  sql = "INSERT INTO `2015Fall_Exercise_Done` (`created_at`, `TypeId`, `UserId`, `Name`, `Time`, `Duration`, `Intensity`) "
-						  + "VALUES (Now(), ?, ?, ?, ?, ?, ? ) ";				
+				  sql = "INSERT INTO Exercise "
+						  + " (name, calories_burned, created_at, persons_id) "
+						  + "VALUES (?, ?, Now(), " + persons_id + ")";				  
 			  }
 
-        conn.query(sql, [row.TypeId, row.UserId, row.Name, row.Time, row.Duration, row.Intensity, row.id],function(err,data){
+        conn.query(sql, [row.name, row.calories_burned, row.persons_id, row.id],function(err,data){
           if(!err && !row.id){
             row.id = data.insertId;
           }
@@ -52,3 +50,13 @@ module.exports =  {
       return errors.length ? errors : false;
     }
 };  
+
+    function GetConnection(){
+            var conn = mysql.createConnection({
+              host: "localhost",
+              user: "huili47",
+              password: " ",
+              database: "c9"
+            });
+        return conn;
+    }

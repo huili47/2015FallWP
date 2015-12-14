@@ -1,19 +1,19 @@
 <?php
-    include_once '../Model/person.php';
+    include_once '../Model/Friend.php';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 $method = $_SERVER['REQUEST_METHOD'];
 $format = isset($_REQUEST['format']) ? $_REQUEST['format'] : 'web';
 $view 	= null;
 switch ($action . '_' . $method) {
 	case 'create_GET':
-		$model = Person::Blank();
-		$view = "persons/edit.php";
+		$model = Friend::Blank();
+		$view = "friends/edit.php";
 		break;
 	case 'save_POST':
 			$sub_action = empty($_REQUEST['id']) ? 'created' : 'updated';
-			$errors = Person::Validate($_REQUEST);
+			$errors = Friend::Validate($_REQUEST);
 			if(!$errors){
-				$errors = Person::Save($_REQUEST);
+				$errors = Friend::Save($_REQUEST);
 			}
 			
 			if(!$errors){
@@ -26,35 +26,35 @@ switch ($action . '_' . $method) {
 			}else{
 				//my_print($errors);
 				$model = $_REQUEST;
-				$view = "persons/edit.php";		
+				$view = "friends/edit.php";		
 			}
 			break;
 	case 'edit_GET':
-		$model = Person::Get($_REQUEST['id']);
-		$view = "persons/edit.php";		
+		$model = Friend::Get($_REQUEST['id']);
+		$view = "friends/edit.php";		
 		break;
 	case 'delete_GET':
-		$model = Person::Get($_REQUEST['id']);
-		$view = "persons/delete.php";		
+		$model = Friend::Get($_REQUEST['id']);
+		$view = "friends/delete.php";		
 		break;
 	case 'delete_POST':
-		$errors = Person::Delete($_REQUEST['id']);
+		$errors = Friend::Delete($_REQUEST['id']);
 		if($errors){
-				$model = Person::Get($_REQUEST['id']);
-				$view = "persons/delete.php";
+				$model = Friend::Get($_REQUEST['id']);
+				$view = "friends/delete.php";
 		}else{
 				header("Location: ?sub_action=$sub_action&id=$_REQUEST[id]");
 				die();			
 		}
 		break;
 	case 'search_GET':
-		$model = Person::Search($_REQUEST['q']);
-		$view = 'persons/index.php';		
+		$model = Friend::Search($_REQUEST['q']);
+		$view = 'friends/index.php';		
 		break;
 	case 'index_GET':
 	default:
-		$model = Person::Get();
-		$view = 'persons/index.php';		
+		$model = Friend::Get();
+		$view = 'friends/index.php';		
 		break;
 }
 switch ($format) {
