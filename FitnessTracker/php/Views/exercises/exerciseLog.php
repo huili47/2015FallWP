@@ -36,8 +36,34 @@ session_start();
   </head>
   <body>
     <div class="container">
-            <a href="MealTakeIn.php" title="View" class="btn btn-default btn-s"><i class="glyphicon glyphicon-arrow-right"></i> Go to Food Log</a>
-            <h1>exercise Log</h1>
+       <div class="menu">
+        <h1>Exercise Log</h1>
+              <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Fittness App</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li ><a href="/FitnessTracker/php/Views/persons/person.php">Person</a></li>
+              <li><a href="/FitnessTracker/php/Views/meals/MealLog.php" >Meal</a></li>
+              <li class="active"><a href="/FitnessTracker/php/Views/exercises/exerciseLog.php" >Exercise</a></li>
+              <li><a href="/FitnessTracker/php/Views/friends/friendLog.php" >Friend</a></li>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+   </div>
             <h2><?=$message?></h2>
             <div class="panel panel-success">
                 <div class="panel-heading">Your Data</div>
@@ -94,15 +120,7 @@ session_start();
             </table>  
           
         </div>
-        <div class="col-md-4 col-xs-10">
-            <div class="alert alert-success" role="alert">
-                You did well
-            </div>
-            <div class="alert alert-danger" role="alert">
-                Oh no! You messed up.
-            </div>
 
-        </div>
       </div>
       
             

@@ -10,10 +10,10 @@ var express = require('express');
     var Twit = require('twit');     //Homework: Setup the apps.facebook and the apps.twitter (developers.twitter.com/apps) (developers.facebook.com/apps)
     
     var twit = new Twit({
-    consumer_key:         'o3iTTszOikjDdZhsFNQJpE83h'
-  , consumer_secret:      'BQM3ofQaEginQt7aYpt319KzjFNvntwELGLfScXSjP2BRr691G'
-  , access_token:         '21572028-jWQzQL8bX9zzsjgHKAfjmU8r6YMF0cpfJdk8C86Db'
-  , access_token_secret:  'LR1viI40BpJf2PFlAFkX0ITlKJhKaL7npbUspozrvKXn9'
+    consumer_key:         'pzBa1VAGBDIWAo0qNx42Ca6ya'
+  , consumer_secret:      'bEaMvRySKuXCyIMlC8psStX0V0HYMTllx7E1jCyB9N9EnrQ7WE'
+  , access_token:         '627899589-7hmxp1grQgmH82UlihDwxZB6OiDL3Sh31L9mvtSE'
+  , access_token_secret:  'u92nZCbfJlPsula9NbZzY6hy6ucAnOYlkRHmBI55gYMIc'
 })    
     app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +28,7 @@ app.get("/person", function(req, res)  //res=response the returned information r
   if (!req.session.user || req.session.user.typeid != 'Admin')  
   {
     res.status(302).send("Error. You do not have permission to access the page");
-    return;   //so the rest isnt run and u dont load the stuff
+    return; 
   }
   person.get(null, function(err, rows)
   {
@@ -65,7 +65,7 @@ app.get("/person", function(req, res)  //res=response the returned information r
     res.send(row);
   })
 })
-.delete("/person/:id", function(req, res){    //server-side controller (Client uses $HTTP to communicate with this server side controller)
+.delete("/person/:id", function(req, res){   
   
   person.delete(req.params.id, function(err, rows){  //model
       if(err)
@@ -79,7 +79,7 @@ app.get("/person", function(req, res)  //res=response the returned information r
   })
 });
 //==================================================================
-app.get("/meal", function(req, res)  //res=response the returned information req=what the user typed in to the browser, ip address
+app.get("/meal", function(req, res)  
 {
   food.get(null, req.session.user.persons_id, function(err, rows)  
   {
@@ -107,8 +107,7 @@ app.get("/meal", function(req, res)  //res=response the returned information req
     res.status(500).send(errors);
     return;
   }
-  //req.body.userID = req.session.user.id;     //req.session.user.id is the fb user. See the get and the top variable
-  meal.save(req.body, req.session.user.persons_id, function(err, row){    //get the current user of the session and their person id so we can display their info only
+  meal.save(req.body, req.session.user.persons_id, function(err, row){    
       if(err)
       {
         res.status(500).send(err);
@@ -117,9 +116,9 @@ app.get("/meal", function(req, res)  //res=response the returned information req
     res.send(row);
   })
 })
-.delete("/mea;/:id", function(req, res){    //server-side controller (Client uses $HTTP to communicate with this server side controller)
+.delete("/meal/:id", function(req, res){   
   
-  meal.delete(req.params.id, function(err, rows){  //model
+  meal.delete(req.params.id, function(err, rows){  
       if(err)
       {
         res.status(500).send(err);
@@ -137,7 +136,6 @@ app.get("/exercise", function(req, res){
   {
     if (err)
     {
-        //500 is an error 200 is ok
         res.status(500).send(err);
     }
     else
@@ -190,7 +188,7 @@ app.get("/exercise", function(req, res){
 })
 
 //========================================================================
-app.get("/friend", function(req, res)  //res=response the returned information req=what the user typed in to the browser, ip address
+app.get("/friend", function(req, res) 
 {
   friend.get(null,  req.session.user.persons_id, function(err, rows)
   {
@@ -227,7 +225,7 @@ app.get("/friend", function(req, res)  //res=response the returned information r
     res.send(row);
   })
 })
-.delete("/friend/:id", function(req, res){    //server-side controller (Client uses $HTTP to communicate with this server side controller)
+.delete("/friend/:id", function(req, res){  
   
   friend.delete(req.params.id, function(err, rows){  //model
       if(err)
@@ -242,24 +240,24 @@ app.get("/friend", function(req, res)  //res=response the returned information r
 })
 
 .post("/login", function(req, res){
-    unirest.get("https://graph.facebook.com/me?access_token=" + req.body.access_token + "&fields=id,name,email,location")  //makes the fb user definition
+    unirest.get("https://graph.facebook.com/me?access_token=" + req.body.access_token + "&fields=id,name,email,location") 
     .end(function (result) {
         var fbUser = req.session.fbUser = JSON.parse(result.body);
         fbUser.access_token = req.body.access_token;
         person.get(fbUser.id, function(err, rows) {
-            if(rows && rows.length){                           //if there is no new user
+            if(rows && rows.length){                          
                 req.session.user = rows[0];
-            }else{                                          //if there is a new user
+            }else{                                         
                 person.save({ firstname: fbUser.name, lastname: fbUser.name, fbid: fbUser.id}, function(err, row) {
                     req.session.user = row;
                 })
             }
             res.send(result.body);
-        }, 'facebook');  //thats the 3rd parameter that goes into the get model ("searchType") So this tells me express calls Model Methods
+        }, 'facebook'); 
         
     });
 })
-.post("/logout", function(req, res)    //I need to break the cacher "Google: Angular Node Cache Issue"
+.post("/logout", function(req, res)   
 {
     req.session = null;
     window.location.reload(true)
